@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    config:
+      fail-fast: false
+      server:
+        native:
+          search-locations:
+            - classpath:/config
+            - classpath:config/{application}
+            - classpath:config/{profile}/{application}
+  profiles:
+    active: native
+  security:
+    user:
+      name: root
+      password: root
+
+server:
+  port: 9999
+  forward-headers-strategy: framework
