@@ -1,18 +1,18 @@
-Spring Boot Microservices Project
+# Spring Boot Microservice Ecosystem Demo
+
 Demo of microservices ecosystem, making use of Netflix OSS and some microservice design patterns.
 
-Requirements
-Maven
-JDK 1.17
-Spring boot
-Lombok
-QueryDsl 
-Mapstruct
+### Requirements
+* Maven
+* JDK 1.17
+* Lombok
+* QueryDsl
+* MapStruct
+* Spring Data Jpa
+* 
 
+#### Running any service
+* mvn spring-boot:run
 
-Running any service
-mvn spring-boot:run
-Services Description
-
-Requests
-Some sample requests for each service is available in Postman Collection file.
+#### Services Description
+* **Config-Server:** Centralized configuration for microservices
