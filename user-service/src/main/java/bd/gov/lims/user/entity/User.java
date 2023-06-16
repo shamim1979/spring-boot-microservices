@@ -1,11 +1,10 @@
 package bd.gov.lims.user.entity;
 
+import bd.gov.lims.common.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
-
-import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,7 +14,7 @@ import java.io.Serializable;
 @ToString
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class User extends BaseEntity {
     @Id
     private Long id;
     private String username;
