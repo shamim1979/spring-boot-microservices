@@ -1,0 +1,16 @@
+config:
+  url: @configServer@
+spring:
+  application:
+    name: utility-service
+  profiles:
+    default: @activatedProperties@
+  cloud:
+    config:
+      fail-fast: true
+      password: lims
+      username: user
+  config:
+    import: configserver:${config.url}
+  main:
+    allow-circular-references: true

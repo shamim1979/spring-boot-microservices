@@ -23,9 +23,9 @@
     <modules>
         <module>common</module>
         <module>user-service</module>
-        <module>payment-service</module>
         <module>utility-service</module>
         <module>config-server</module>
+        <module>registry-server</module>
     </modules>
 
     <properties>
@@ -35,6 +35,33 @@
         <project.lombok.version>1.18.26</project.lombok.version>
         <spring-cloud.version>2022.0.3</spring-cloud.version>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>develop</id>
+            <properties>
+                <configServer>http://localhost:8888/</configServer>
+                <activatedProperties>develop</activatedProperties>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>staging</id>
+            <properties>
+                <configServer>http://staging:8888/</configServer>
+                <activatedProperties>staging</activatedProperties>
+            </properties>
+        </profile>
+        <profile>
+            <id>release</id>
+            <properties>
+                <configServer>http://release:8888/</configServer>
+                <activatedProperties>release</activatedProperties>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencies>
         <dependency>
