@@ -8,8 +8,8 @@ spring:
   cloud:
     config:
       fail-fast: true
-      password: lims
-      username: user
+      password: BdEwu2023
+      username: admin
   config:
     import: configserver:${config.url}
   main:

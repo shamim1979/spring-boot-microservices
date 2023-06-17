@@ -2,7 +2,7 @@ config:
   url: @configServer@
 spring:
   application:
-    name: user-service
+    name: registry-server
   profiles:
     default: @activatedProperties@
   cloud:
@@ -14,3 +14,17 @@ spring:
     import: configserver:${config.url}
   main:
     allow-circular-references: true
+
+  security:
+    user:
+      name: admin
+      password: BdEwu2023
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    server:
+      waitTimeInMsWhenSyncEmpty: 0

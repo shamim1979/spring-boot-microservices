@@ -40,7 +40,7 @@
         <profile>
             <id>develop</id>
             <properties>
-                <configServer>http://localhost:8888/</configServer>
+                <configServer>http://localhost:8081/</configServer>
                 <activatedProperties>develop</activatedProperties>
             </properties>
             <activation>
@@ -50,14 +50,14 @@
         <profile>
             <id>staging</id>
             <properties>
-                <configServer>http://staging:8888/</configServer>
+                <configServer>http://staging:8081/</configServer>
                 <activatedProperties>staging</activatedProperties>
             </properties>
         </profile>
         <profile>
             <id>release</id>
             <properties>
-                <configServer>http://release:8888/</configServer>
+                <configServer>http://release:8081/</configServer>
                 <activatedProperties>release</activatedProperties>
             </properties>
         </profile>

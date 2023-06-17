@@ -1,2 +1,9 @@
 server:
-  port: 9002
+  port: 8091
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://admin:BdEwu2023@localhost:8082/eureka/

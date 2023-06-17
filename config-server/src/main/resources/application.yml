@@ -12,9 +12,9 @@ spring:
     active: native
   security:
     user:
-      name: user
-      password: lims
+      name: admin
+      password: BdEwu2023
 
 server:
-  port: 8888
+  port: 8081
   forward-headers-strategy: framework
