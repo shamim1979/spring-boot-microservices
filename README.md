@@ -2,7 +2,7 @@
 
 Developing a production-grade Spring-based microservices ecosystem requires careful consideration of various factors, including coding standards, architectural components, and essential frameworks and libraries. 
 
------
+----
 
 ### Requirements
 * Maven
@@ -18,7 +18,7 @@ Developing a production-grade Spring-based microservices ecosystem requires care
 * MapStruct
 * Spring security will be added soon
 
-----
+------
 
 ### Framework and Libraries
 
@@ -30,7 +30,7 @@ Developing a production-grade Spring-based microservices ecosystem requires care
 
 * **Spring Boot 3:** provides an opinionated approach to building microservices. It simplifies the configuration and deployment process, autoconfigures various components, and includes built-in support for creating RESTful APIs. Ensure that you use the latest version of Spring Boot and keep track of any updates or new features introduced.
 
-----
+------
 
 * **Gateway Server:** Use a gateway, such as Spring Cloud Gateway or Netflix Zuul, to handle API routing, load balancing, and security.
 
@@ -40,7 +40,7 @@ Developing a production-grade Spring-based microservices ecosystem requires care
 
 * **Eureka Server:**  Service Registry: Utilize a service registry, such as Netflix Eureka to enable service discovery and registration.
 
-----
+------
 
 * **Spring Data JPA:**  Spring Data JPA is a part of the Spring Data project, which provides a high-level abstraction for working with databases in Java applications. It simplifies the development of data access layers by reducing boilerplate code and providing convenient APIs.
 
