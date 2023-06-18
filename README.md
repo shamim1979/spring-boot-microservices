@@ -2,21 +2,25 @@
 
 Developing a production-grade Spring-based microservices ecosystem requires careful consideration of various factors, including coding standards, architectural components, and essential frameworks and libraries. 
 
+-----
 
 ### Requirements
 * Maven
 * JDK 17
 * Spring boot 3.1.0
-* Spring Data JPA
 * Spring Cloud Gateway Server
 * Spring Cloud Config Server
 * Spring Cloud Eureka Server
+* Spring Data JPA
 * Lombok
 * QueryDsl
 * MapStruct
 * Specification-Arg-Resolver
 * Spring security will be added soon
 
+-----
+
+### Framework and Libraries
 
 * **Maven:** Uses Maven Wrapper
 
@@ -26,12 +30,7 @@ Developing a production-grade Spring-based microservices ecosystem requires care
 
 * **Spring Boot 3:** provides an opinionated approach to building microservices. It simplifies the configuration and deployment process, autoconfigures various components, and includes built-in support for creating RESTful APIs. Ensure that you use the latest version of Spring Boot and keep track of any updates or new features introduced.
 
-
-* **Spring Data JPA:**  Spring Data JPA
-
-
-Considering the following essential components when designing microservices ecosystem:
-
+-----
 
 * **Gateway Server:** Use a gateway, such as Spring Cloud Gateway or Netflix Zuul, to handle API routing, load balancing, and security.
 
@@ -40,6 +39,10 @@ Considering the following essential components when designing microservices ecos
 
 
 * **Eureka Server:**  Service Registry: Utilize a service registry, such as Netflix Eureka to enable service discovery and registration.
+
+-----
+
+* **Spring Data JPA:**  Spring Data JPA
 
 
 * **Lombok:**  Lombok is a library that eliminates boilerplate code by providing annotations to generate getter/setter methods, constructors, equals/hashCode methods, and more. It helps reduce code verbosity and improves developer productivity. Incorporate Lombok into project to simplify the codebase.
