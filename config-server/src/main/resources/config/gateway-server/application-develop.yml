@@ -2,6 +2,13 @@ server:
   port: 8080
   forward-headers-strategy: framework
 
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://admin:BdEwu2023@localhost:8082/eureka/
+
 spring:
   cloud:
     gateway:
