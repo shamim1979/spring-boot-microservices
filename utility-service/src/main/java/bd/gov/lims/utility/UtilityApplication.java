@@ -1,7 +1,8 @@
 package bd.gov.lims.utility;
 
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -10,6 +11,9 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 public class UtilityApplication {
     public static void main(String[] args) {
-        SpringApplication.run(UtilityApplication.class);
+        new SpringApplicationBuilder(UtilityApplication.class)
+                .web(WebApplicationType.REACTIVE)
+                .build()
+                .run(args);
     }
 }
