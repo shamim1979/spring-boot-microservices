@@ -15,18 +15,19 @@ import java.lang.annotation.Annotation;
 import java.util.Iterator;
 import java.util.Locale;
 
-public class CustomSpecificationArgumentResolver implements HandlerMethodArgumentResolver {
+
+public class WebfluxSpecificationArgumentResolver implements HandlerMethodArgumentResolver {
     private SpecificationFactory specificationFactory;
 
-    public CustomSpecificationArgumentResolver(ConversionService conversionService, AbstractApplicationContext abstractApplicationContext) {
+    public WebfluxSpecificationArgumentResolver(ConversionService conversionService, AbstractApplicationContext abstractApplicationContext) {
         this(conversionService, abstractApplicationContext, Locale.getDefault());
     }
 
-    public CustomSpecificationArgumentResolver(AbstractApplicationContext applicationContext) {
+    public WebfluxSpecificationArgumentResolver(AbstractApplicationContext applicationContext) {
         this((ConversionService)null, (AbstractApplicationContext)applicationContext);
     }
 
-    public CustomSpecificationArgumentResolver(ConversionService conversionService, AbstractApplicationContext abstractApplicationContext, Locale defaultLocale) {
+    public WebfluxSpecificationArgumentResolver(ConversionService conversionService, AbstractApplicationContext abstractApplicationContext, Locale defaultLocale) {
         this.specificationFactory = new SpecificationFactory(conversionService, abstractApplicationContext, defaultLocale);
     }
 
@@ -37,7 +38,9 @@ public class CustomSpecificationArgumentResolver implements HandlerMethodArgumen
 
     @Override
     public Mono<Object> resolveArgument(MethodParameter parameter, BindingContext bindingContext, ServerWebExchange exchange) {
-        return (Mono<Object>) this.specificationFactory.createSpecificationDependingOn((ProcessingContext) bindingContext);
+        ProcessingContext context = new WebfluxRequestProcessingContext(parameter, exchange);
+        Object object = this.specificationFactory.createSpecificationDependingOn(context);
+        return Mono.just(object);
     }
 
     private boolean isAnnotated(MethodParameter methodParameter) {
@@ -84,4 +87,5 @@ public class CustomSpecificationArgumentResolver implements HandlerMethodArgumen
         return false;
     }
 }
+
 

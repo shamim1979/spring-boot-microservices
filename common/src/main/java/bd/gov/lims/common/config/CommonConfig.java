@@ -22,6 +22,6 @@ public class CommonConfig implements WebFluxConfigurer {
     }
 
     private HandlerMethodArgumentResolver getCustomResolver() {
-        return (HandlerMethodArgumentResolver) new CustomSpecificationArgumentResolver(abstractApplicationContext);
+        return (HandlerMethodArgumentResolver) new WebfluxSpecificationArgumentResolver(abstractApplicationContext);
     }
 }
