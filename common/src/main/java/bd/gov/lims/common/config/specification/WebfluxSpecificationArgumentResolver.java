@@ -1,4 +1,4 @@
-package bd.gov.lims.common.config;
+package bd.gov.lims.common.config.specification;
 
 import net.kaczmarzyk.spring.data.jpa.web.ProcessingContext;
 import net.kaczmarzyk.spring.data.jpa.web.SpecificationFactory;

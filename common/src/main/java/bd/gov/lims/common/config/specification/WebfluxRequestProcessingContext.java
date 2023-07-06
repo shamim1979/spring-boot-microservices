@@ -1,4 +1,4 @@
-package bd.gov.lims.common.config;
+package bd.gov.lims.common.config.specification;
 
 import net.kaczmarzyk.spring.data.jpa.utils.BodyParams;
 import net.kaczmarzyk.spring.data.jpa.utils.JsonBodyParams;

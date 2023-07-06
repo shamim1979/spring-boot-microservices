@@ -22,7 +22,6 @@
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <com.querydsl.version>5.0.0</com.querydsl.version>
         <jakarta.persistence.version>3.1.0</jakarta.persistence.version>
-        <resource.delimiter>^</resource.delimiter>
     </properties>
 
     <dependencies>
@@ -112,6 +111,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.1.0</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

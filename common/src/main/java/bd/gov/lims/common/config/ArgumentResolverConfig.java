@@ -1,5 +1,6 @@
 package bd.gov.lims.common.config;
 
+import bd.gov.lims.common.config.specification.WebfluxSpecificationArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -8,10 +9,10 @@ import org.springframework.web.reactive.result.method.HandlerMethodArgumentResol
 import org.springframework.web.reactive.result.method.annotation.ArgumentResolverConfigurer;
 
 @Configuration
-public class CommonConfig implements WebFluxConfigurer {
+public class ArgumentResolverConfig implements WebFluxConfigurer {
     private final AbstractApplicationContext abstractApplicationContext;
     @Autowired
-    CommonConfig(AbstractApplicationContext abstractApplicationContext) {
+    ArgumentResolverConfig(AbstractApplicationContext abstractApplicationContext) {
         this.abstractApplicationContext = abstractApplicationContext;
     }
 
