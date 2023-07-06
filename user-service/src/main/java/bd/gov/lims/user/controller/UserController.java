@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping("/hello")
-    public ResponseEntity<String> hello(@RequestBody String data) {
+    public ResponseEntity<String> hello() {
         return ResponseEntity.ok("hello");
     }
 

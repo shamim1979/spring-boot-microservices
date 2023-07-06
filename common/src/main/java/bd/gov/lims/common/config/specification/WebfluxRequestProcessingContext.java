@@ -7,12 +7,15 @@ import net.kaczmarzyk.spring.data.jpa.web.DefaultQueryContext;
 import net.kaczmarzyk.spring.data.jpa.web.ProcessingContext;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.MissingPathVarPolicy;
 import org.springframework.core.MethodParameter;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.reactive.HandlerMapping;
 import org.springframework.web.server.ServerWebExchange;
 
 import java.lang.annotation.Annotation;
+import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
@@ -81,7 +84,10 @@ public class WebfluxRequestProcessingContext implements ProcessingContext {
             if (request == null) {
                 throw new IllegalStateException("Request body not present");
             } else {
-                return "hello";
+                return DataBufferUtils.join(request.getBody())
+                        .map(DataBuffer::asByteBuffer)
+                        .map(ByteBuffer::array)
+                        .map(String::new).block();
             }
         } catch (Exception var2) {
             throw new RuntimeException("Cannot read request body", var2);
