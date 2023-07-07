@@ -1,6 +1,7 @@
 package bd.gov.lims.common.errorhandling.handler;
 
 import bd.gov.lims.common.errorhandling.ApiErrorResponse;
+import bd.gov.lims.common.errorhandling.ApiExceptionHandler;
 import bd.gov.lims.common.errorhandling.ErrorHandlingProperties;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
 import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;

@@ -93,6 +93,11 @@
                             <artifactId>jakarta.persistence-api</artifactId>
                             <version>${jakarta-persistence.version}</version>
                         </path>
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                            <version>3.1.0</version>
+                        </path>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>

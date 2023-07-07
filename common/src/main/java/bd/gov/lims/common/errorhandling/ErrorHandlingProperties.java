@@ -3,7 +3,6 @@ package bd.gov.lims.common.errorhandling;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 @ConfigurationProperties("error.handling")
-@Component
 public class ErrorHandlingProperties {
     private boolean enabled = true;
 
