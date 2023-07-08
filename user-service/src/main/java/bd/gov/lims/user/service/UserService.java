@@ -1,6 +1,6 @@
 package bd.gov.lims.user.service;
 
-import bd.gov.lims.user.dto.UserDto;
+import bd.gov.lims.common.dto.UserDto;
 import reactor.core.publisher.Mono;
 
 public interface UserService {

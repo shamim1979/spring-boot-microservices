@@ -1,6 +1,6 @@
 package bd.gov.lims.user.controller;
 
-import bd.gov.lims.user.dto.UserDto;
+import bd.gov.lims.common.dto.UserDto;
 import bd.gov.lims.user.entity.User;
 import bd.gov.lims.user.service.UserService;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
