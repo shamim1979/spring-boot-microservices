@@ -1,8 +1,13 @@
 package bd.gov.lims.common.errorhandling;
 
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Setter
 public class ApiGlobalError {
-    private final String code;
-    private final String message;
+    private String code;
+    private String message;
 
     public ApiGlobalError(String code, String message) {
         this.code = code;

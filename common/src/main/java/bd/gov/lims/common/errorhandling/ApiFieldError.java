@@ -1,11 +1,16 @@
 package bd.gov.lims.common.errorhandling;
 
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Setter
 public class ApiFieldError {
-    private final String code;
-    private final String property;
-    private final String message;
-    private final Object rejectedValue;
-    private final String path;
+    private String code;
+    private String property;
+    private String message;
+    private Object rejectedValue;
+    private String path;
 
     public ApiFieldError(String code, String property, String message, Object rejectedValue, String path) {
         this.code = code;

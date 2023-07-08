@@ -1,6 +1,7 @@
 package bd.gov.lims.common.errorhandling.reactive;
 
 import bd.gov.lims.common.errorhandling.*;
+import bd.gov.lims.common.errorhandling.handler.ClientResponseExceptionHandler;
 import bd.gov.lims.common.errorhandling.handler.ServerErrorExceptionHandler;
 import bd.gov.lims.common.errorhandling.handler.ServerWebInputExceptionHandler;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
@@ -52,6 +53,14 @@ public class ReactiveErrorHandlingConfiguration extends AbstractErrorHandlingCon
                                                                    ErrorCodeMapper errorCodeMapper,
                                                                    ErrorMessageMapper errorMessageMapper) {
         return new ServerErrorExceptionHandler(httpStatusMapper, errorCodeMapper, errorMessageMapper);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public ClientResponseExceptionHandler clientResponseExceptionHandler(HttpStatusMapper httpStatusMapper,
+                                                                      ErrorCodeMapper errorCodeMapper,
+                                                                      ErrorMessageMapper errorMessageMapper) {
+        return new ClientResponseExceptionHandler(httpStatusMapper, errorCodeMapper, errorMessageMapper);
     }
 
     @Bean

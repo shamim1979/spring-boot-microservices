@@ -1,10 +1,15 @@
 package bd.gov.lims.common.errorhandling;
 
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Setter
 public class ApiParameterError {
-    private final String code;
-    private final String parameter;
-    private final String message;
-    private final Object rejectedValue;
+    private String code;
+    private String parameter;
+    private String message;
+    private Object rejectedValue;
 
     public ApiParameterError(String code, String parameter, String message, Object rejectedValue) {
         this.code = code;
