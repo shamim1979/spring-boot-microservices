@@ -13,7 +13,7 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name = "users")
+@Table(name = "divisions")
 public class Division extends BaseEntity {
     @NotNull
     private String username;

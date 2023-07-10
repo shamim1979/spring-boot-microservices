@@ -42,6 +42,7 @@
             <id>develop</id>
             <properties>
                 <configServer>http://localhost:8081/</configServer>
+                <dbShowSql>false</dbShowSql>
                 <activatedProperties>develop</activatedProperties>
             </properties>
             <activation>
@@ -52,6 +53,7 @@
             <id>staging</id>
             <properties>
                 <configServer>http://staging:8081/</configServer>
+                <dbShowSql>false</dbShowSql>
                 <activatedProperties>staging</activatedProperties>
             </properties>
         </profile>
@@ -59,6 +61,7 @@
             <id>release</id>
             <properties>
                 <configServer>http://release:8081/</configServer>
+                <dbShowSql>false</dbShowSql>
                 <activatedProperties>release</activatedProperties>
             </properties>
         </profile>

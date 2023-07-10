@@ -1,3 +1,6 @@
+database:
+  showSql: @dbShowSql@
+
 server:
   port: 8090
 
@@ -7,3 +10,17 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://admin:BdEwu2023@localhost:8082/eureka/
+
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/lims
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    generate-ddl: true
+    show-sql: ${database.showSql}
