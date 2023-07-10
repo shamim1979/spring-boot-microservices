@@ -32,8 +32,6 @@ public class UtilityController {
                 .post()
                 .uri("/api/users")
                 .body(Mono.just(UserDto.builder()
-                        .username("shamim")
-                        .email("shamim")
                         .password("sdfsdag")
                         .build()
                 ), UserDto.class)
