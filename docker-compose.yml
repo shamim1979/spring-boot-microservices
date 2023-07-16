@@ -1,7 +1,8 @@
 version: '3.9'
+
 services:
-  mysql:
-    container_name: lims-db
+  lims-mysql:
+    container_name: lims-mysql
     image: mysql:8
     restart: always
     environment:
@@ -23,5 +24,16 @@ services:
       - /var/lib/mysql/lims-db:/var/lib/mysql
       - ./docker/mysql/init/schema.sql:/docker-entrypoint-initdb.d/1.sql
       - ./docker/mysql/init/data.sql:/docker-entrypoint-initdb.d/2.sql
-volumes:
-  lims-db:
+
+
+  lims-redis:
+    container_name: lims-redis
+    image: redis:latest
+    restart: always
+    command: redis-server --requirepass redis
+    ports:
+      - '6379:6379'
+    expose:
+      - '6379'
+    volumes:
+      - /var/lib/redis/lims-db:/data
