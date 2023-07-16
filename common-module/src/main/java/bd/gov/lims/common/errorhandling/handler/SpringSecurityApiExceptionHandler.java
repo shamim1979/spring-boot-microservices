@@ -1,8 +1,8 @@
 package bd.gov.lims.common.errorhandling.handler;
 
 
-import bd.gov.lims.common.errorhandling.ErrorHandlingProperties;
 import bd.gov.lims.common.errorhandling.ApiErrorResponse;
+import bd.gov.lims.common.errorhandling.ErrorHandlingProperties;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
 import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;
 import bd.gov.lims.common.errorhandling.mapper.HttpStatusMapper;
@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 public class SpringSecurityApiExceptionHandler extends AbstractApiExceptionHandler {
 

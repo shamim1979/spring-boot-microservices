@@ -27,7 +27,7 @@
     <dependencies>
         <dependency>
             <groupId>bd.gov.lims</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>common-module</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>
