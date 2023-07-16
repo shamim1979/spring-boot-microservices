@@ -1,5 +1,6 @@
 package bd.gov.lims.user.service.impl;
 
+import bd.gov.lims.base.config.RedisConfig;
 import bd.gov.lims.common.dto.UserDto;
 import bd.gov.lims.user.entity.User;
 import bd.gov.lims.user.mapper.UserMapper;
@@ -13,10 +14,12 @@ import reactor.core.publisher.Mono;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final RedisConfig redisConfig;
     @Autowired
-    UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RedisConfig redisConfig) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.redisConfig = redisConfig;
     }
     @Override
     public Mono<UserDto> persistUser(UserDto userDto) {

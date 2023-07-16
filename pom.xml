@@ -27,6 +27,7 @@
         <module>registry-server</module>
         <module>gateway-server</module>
         <module>common-module</module>
+        <module>base-module</module>
     </modules>
 
     <properties>

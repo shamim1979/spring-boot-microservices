@@ -4,7 +4,7 @@ spring:
   application:
     name: user-service
   profiles:
-    default: @activatedProperties@
+    active: @activatedProperties@
   cloud:
     config:
       fail-fast: true

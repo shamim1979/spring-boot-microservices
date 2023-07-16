@@ -4,7 +4,7 @@ spring:
   application:
     name: gateway-server
   profiles:
-    default: @activatedProperties@
+    active: @activatedProperties@
   cloud:
     config:
       fail-fast: true
