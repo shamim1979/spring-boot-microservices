@@ -1,7 +1,7 @@
 package bd.gov.lims.common.errorhandling.handler;
 
 
-import bd.gov.lims.common.errorhandling.ApiErrorResponse;
+import bd.gov.lims.base.support.ApiErrorResponseDto;
 import bd.gov.lims.common.errorhandling.exception.ClientResponseException;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
 import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;
@@ -20,8 +20,8 @@ public class ClientResponseExceptionHandler extends AbstractApiExceptionHandler 
     }
 
     @Override
-    public ApiErrorResponse handle(Throwable exception) {
+    public ApiErrorResponseDto handle(Throwable exception) {
         ClientResponseException ex = (ClientResponseException) exception;
-        return ex.getApiErrorResponse();
+        return ex.getApiErrorResponseDto();
     }
 }

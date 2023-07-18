@@ -1,6 +1,10 @@
 package bd.gov.lims.common.errorhandling.reactive;
 
-import bd.gov.lims.common.errorhandling.*;
+import bd.gov.lims.base.support.ApiErrorResponseDto;
+import bd.gov.lims.common.errorhandling.ApiErrorResponseCustomizer;
+import bd.gov.lims.common.errorhandling.ApiExceptionHandler;
+import bd.gov.lims.common.errorhandling.FallbackApiExceptionHandler;
+import bd.gov.lims.common.errorhandling.LoggingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
@@ -55,7 +59,7 @@ public class GlobalErrorWebExceptionHandler extends DefaultErrorWebExceptionHand
         LOGGER.debug("webRequest: {}", request);
         LOGGER.debug("locale: {}", locale);
 
-        ApiErrorResponse errorResponse = null;
+        ApiErrorResponseDto errorResponse = null;
         for (ApiExceptionHandler handler : handlers) {
             if (handler.canHandle(exception)) {
                 errorResponse = handler.handle(exception);
@@ -73,8 +77,9 @@ public class GlobalErrorWebExceptionHandler extends DefaultErrorWebExceptionHand
 
         loggingService.logException(errorResponse, exception);
 
-        return ServerResponse.status(errorResponse.getHttpStatus())
+        Mono<ServerResponse> serverResponse = ServerResponse.status(errorResponse.getStatus())
                              .contentType(MediaType.APPLICATION_JSON)
                              .body(BodyInserters.fromValue(errorResponse));
+        return serverResponse;
     }
 }

@@ -6,7 +6,6 @@ import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
 import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;
 import bd.gov.lims.common.errorhandling.mapper.HttpStatusMapper;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 
 public abstract class AbstractApiExceptionHandler implements ApiExceptionHandler {
     protected final HttpStatusMapper httpStatusMapper;
@@ -21,8 +20,8 @@ public abstract class AbstractApiExceptionHandler implements ApiExceptionHandler
         this.errorMessageMapper = errorMessageMapper;
     }
 
-    protected HttpStatusCode getHttpStatus(Throwable exception, HttpStatus defaultHttpStatus) {
-        return httpStatusMapper.getHttpStatus(exception, defaultHttpStatus);
+    protected int getHttpStatus(Throwable exception, HttpStatus defaultHttpStatus) {
+        return httpStatusMapper.getHttpStatus(exception, defaultHttpStatus).value();
     }
 
     protected String getErrorCode(Throwable exception) {

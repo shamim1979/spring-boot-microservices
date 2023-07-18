@@ -1,12 +1,13 @@
 package bd.gov.lims.common.errorhandling;
 
+import bd.gov.lims.base.support.ApiErrorResponseDto;
+import bd.gov.lims.base.support.ErrorDto;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
 import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;
 import bd.gov.lims.common.errorhandling.mapper.HttpStatusMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -17,6 +18,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,14 +39,29 @@ public class DefaultFallbackApiExceptionHandler implements FallbackApiExceptionH
     }
 
     @Override
-    public ApiErrorResponse handle(Throwable exception) {
-        HttpStatusCode statusCode = httpStatusMapper.getHttpStatus(exception);
+    public ApiErrorResponseDto handle(Throwable exception) {
+        int statusCode = httpStatusMapper.getHttpStatus(exception).value();
         String errorCode = errorCodeMapper.getErrorCode(exception);
         String errorMessage = errorMessageMapper.getErrorMessage(exception);
 
-        ApiErrorResponse response = new ApiErrorResponse(statusCode, errorCode, errorMessage);
-        response.addErrorProperties(getMethodResponseErrorProperties(exception));
-        response.addErrorProperties(getFieldResponseErrorProperties(exception));
+        ApiErrorResponseDto response = ApiErrorResponseDto.builder()
+                .nonce(Instant.now().toEpochMilli())
+                .status(statusCode)
+                .message(errorMessage)
+                .error(ErrorDto.builder()
+                        .code(errorCode)
+                        .message(errorMessage)
+                        .build())
+                .build();
+
+        Map<String,Object> methodResponseErrorProperties = getMethodResponseErrorProperties(exception);
+        Map<String,Object> fieldResponseErrorProperties = getFieldResponseErrorProperties(exception);
+        Map<String,Object> allResponseErrorProperties = new HashMap<>();
+        methodResponseErrorProperties.entrySet().stream()
+                .forEach(entry ->allResponseErrorProperties.put(entry.getKey(),entry.getValue()));
+        fieldResponseErrorProperties.entrySet().stream()
+                .forEach(entry ->allResponseErrorProperties.put(entry.getKey(),entry.getValue()));
+        response.getError().setProperties(allResponseErrorProperties);
 
         return response;
     }

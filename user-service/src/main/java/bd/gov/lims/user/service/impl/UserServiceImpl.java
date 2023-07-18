@@ -2,7 +2,8 @@ package bd.gov.lims.user.service.impl;
 
 import bd.gov.lims.base.config.RedisConfig;
 import bd.gov.lims.common.dto.UserDto;
-import bd.gov.lims.user.entity.User;
+import bd.gov.lims.common.param.UserParam;
+import bd.gov.lims.user.entity.AppUser;
 import bd.gov.lims.user.mapper.UserMapper;
 import bd.gov.lims.user.repository.UserRepository;
 import bd.gov.lims.user.service.UserService;
@@ -22,8 +23,8 @@ public class UserServiceImpl implements UserService {
         this.redisConfig = redisConfig;
     }
     @Override
-    public Mono<UserDto> persistUser(UserDto userDto) {
-        User user = userRepository.save(userMapper.userDtoToUser(userDto));
+    public Mono<UserDto> persistUser(UserParam userParam) {
+        AppUser user = userRepository.save(userMapper.userParamToUser(userParam));
         return Mono.just(userMapper.userToUserDto(user));
     }
 }

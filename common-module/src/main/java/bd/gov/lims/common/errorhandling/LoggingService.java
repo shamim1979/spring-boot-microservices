@@ -1,5 +1,6 @@
 package bd.gov.lims.common.errorhandling;
 
+import bd.gov.lims.base.support.ApiErrorResponseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.logging.LogLevel;
@@ -13,8 +14,8 @@ public class LoggingService {
         this.properties = properties;
     }
 
-    public void logException(ApiErrorResponse errorResponse, Throwable exception) {
-        HttpStatusCode httpStatus = errorResponse.getHttpStatus();
+    public void logException(ApiErrorResponseDto errorResponse, Throwable exception) {
+        HttpStatusCode httpStatus = HttpStatusCode.valueOf(errorResponse.getStatus());
         if (properties.getFullStacktraceClasses().contains(exception.getClass())) {
             logAccordingToRequestedLogLevel(httpStatus, exception, true);
         } else if (!properties.getFullStacktraceHttpStatuses().isEmpty()) {

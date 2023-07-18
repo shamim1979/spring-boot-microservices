@@ -1,9 +1,10 @@
 package bd.gov.lims.common.errorhandling.handler;
 
 
-import bd.gov.lims.common.errorhandling.ApiErrorResponse;
-import bd.gov.lims.common.errorhandling.ApiFieldError;
-import bd.gov.lims.common.errorhandling.ApiGlobalError;
+import bd.gov.lims.base.support.ApiErrorResponseDto;
+import bd.gov.lims.base.support.ApiFieldError;
+import bd.gov.lims.base.support.ApiGlobalError;
+import bd.gov.lims.base.support.ErrorDto;
 import bd.gov.lims.common.errorhandling.ErrorHandlingProperties;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
 import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;
@@ -14,6 +15,8 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+
+import java.time.Instant;
 
 
 /**
@@ -42,27 +45,39 @@ public class BindApiExceptionHandler extends AbstractApiExceptionHandler {
     }
 
     @Override
-    public ApiErrorResponse handle(Throwable exception) {
+    public ApiErrorResponseDto handle(Throwable exception) {
 
         BindingResult bindingResult = (BindingResult) exception;
-        ApiErrorResponse response = new ApiErrorResponse(getHttpStatus(exception, HttpStatus.BAD_REQUEST),
-                                                         getErrorCode(exception),
-                                                         getMessage(bindingResult));
+
+        ApiErrorResponseDto response = ApiErrorResponseDto.builder()
+                .nonce(Instant.now().toEpochMilli())
+                .status(getHttpStatus(exception, HttpStatus.BAD_REQUEST))
+                .message(getMessage(bindingResult))
+                .error(ErrorDto.builder()
+                        .code(getErrorCode(exception))
+                        .message(getMessage(bindingResult))
+                        .build())
+                .build();
+
         if (bindingResult.hasFieldErrors()) {
             bindingResult.getFieldErrors().stream()
-                         .map(fieldError -> new ApiFieldError(getCode(fieldError),
-                                                              fieldError.getField(),
-                                                              getMessage(fieldError),
-                                                              fieldError.getRejectedValue(),
-                                                              getPath(fieldError)))
-                         .forEach(response::addFieldError);
+                    .map(fieldError -> ApiFieldError.builder()
+                            .code(getCode(fieldError))
+                            .property(fieldError.getField())
+                            .message(getMessage(fieldError))
+                            .rejectedValue(fieldError.getRejectedValue())
+                            .path(getPath(fieldError))
+                            .build())
+                    .forEach(error -> response.getError().getFieldErrors().add(error));
         }
 
         if (bindingResult.hasGlobalErrors()) {
             bindingResult.getGlobalErrors().stream()
-                         .map(globalError -> new ApiGlobalError(errorCodeMapper.getErrorCode(globalError.getCode()),
-                                                                errorMessageMapper.getErrorMessage(globalError.getCode(), globalError.getDefaultMessage())))
-                         .forEach(response::addGlobalError);
+                    .map(globalError -> ApiGlobalError.builder()
+                            .code(errorCodeMapper.getErrorCode(globalError.getCode()))
+                            .message(errorMessageMapper.getErrorMessage(globalError.getCode(), globalError.getDefaultMessage()))
+                            .build())
+                    .forEach(error -> response.getError().getGlobalErrors().add(error));
         }
 
         return response;

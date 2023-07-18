@@ -1,6 +1,7 @@
 package bd.gov.lims.common.errorhandling.handler;
 
-import bd.gov.lims.common.errorhandling.ApiErrorResponse;
+import bd.gov.lims.base.support.ApiErrorResponseDto;
+import bd.gov.lims.base.support.ErrorDto;
 import bd.gov.lims.common.errorhandling.ApiExceptionHandler;
 import bd.gov.lims.common.errorhandling.ErrorHandlingProperties;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
@@ -8,6 +9,8 @@ import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;
 import bd.gov.lims.common.errorhandling.mapper.HttpStatusMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+
+import java.time.Instant;
 
 /**
  * {@link ApiExceptionHandler} for
@@ -28,10 +31,16 @@ public class HttpMessageNotReadableApiExceptionHandler extends AbstractApiExcept
     }
 
     @Override
-    public ApiErrorResponse handle(Throwable exception) {
-        return new ApiErrorResponse(getHttpStatus(exception, HttpStatus.BAD_REQUEST),
-                                    getErrorCode(exception),
-                                    getErrorMessage(exception));
+    public ApiErrorResponseDto handle(Throwable exception) {
+        return ApiErrorResponseDto.builder()
+                .nonce(Instant.now().toEpochMilli())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message(getErrorMessage(exception))
+                .error(ErrorDto.builder()
+                        .code(getErrorCode(exception))
+                        .message(getErrorMessage(exception))
+                        .build())
+                .build();
     }
 
 }

@@ -1,14 +1,16 @@
 package bd.gov.lims.common.errorhandling.handler;
 
 
-import bd.gov.lims.common.errorhandling.ApiErrorResponse;
+import bd.gov.lims.base.support.ApiErrorResponseDto;
+import bd.gov.lims.base.support.ErrorDto;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
 import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;
 import bd.gov.lims.common.errorhandling.mapper.HttpStatusMapper;
 import org.springframework.core.MethodParameter;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.support.WebExchangeBindException;
 import org.springframework.web.server.ServerWebInputException;
+
+import java.time.Instant;
 
 public class ServerWebInputExceptionHandler extends AbstractApiExceptionHandler {
     public ServerWebInputExceptionHandler(HttpStatusMapper httpStatusMapper,
@@ -25,16 +27,23 @@ public class ServerWebInputExceptionHandler extends AbstractApiExceptionHandler 
     }
 
     @Override
-    public ApiErrorResponse handle(Throwable exception) {
+    public ApiErrorResponseDto handle(Throwable exception) {
         ServerWebInputException ex = (ServerWebInputException) exception;
-        HttpStatusCode status = ex.getStatusCode();
-        ApiErrorResponse response = new ApiErrorResponse(status,
-                                                         getErrorCode(exception),
-                                                         getErrorMessage(exception));
+
+        ApiErrorResponseDto response = ApiErrorResponseDto.builder()
+                .nonce(Instant.now().toEpochMilli())
+                .status(ex.getStatusCode().value())
+                .message(ex.getMessage())
+                .error(ErrorDto.builder()
+                        .code(getErrorCode(exception))
+                        .message(ex.getMessage())
+                        .build())
+                .build();
+
         MethodParameter methodParameter = ex.getMethodParameter();
         if (methodParameter != null) {
-            response.addErrorProperty("parameterName", methodParameter.getParameterName());
-            response.addErrorProperty("parameterType", methodParameter.getParameterType().getSimpleName());
+            response.getError().getProperties().put("parameterName", methodParameter.getParameterName());
+            response.getError().getProperties().put("parameterType", methodParameter.getParameterType().getSimpleName());
         }
         return response;
     }

@@ -1,9 +1,7 @@
 package bd.gov.lims.common.errorhandling.reactive;
 
 import bd.gov.lims.common.errorhandling.*;
-import bd.gov.lims.common.errorhandling.handler.ClientResponseExceptionHandler;
-import bd.gov.lims.common.errorhandling.handler.ServerErrorExceptionHandler;
-import bd.gov.lims.common.errorhandling.handler.ServerWebInputExceptionHandler;
+import bd.gov.lims.common.errorhandling.handler.*;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
 import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;
 import bd.gov.lims.common.errorhandling.mapper.HttpStatusMapper;
@@ -57,6 +55,15 @@ public class ReactiveErrorHandlingConfiguration extends AbstractErrorHandlingCon
 
     @Bean
     @ConditionalOnMissingBean
+    public DataIntegrityViolationExceptionHandler dataIntegrityViolationExceptionHandler(ErrorHandlingProperties properties,
+                                                                                         HttpStatusMapper httpStatusMapper,
+                                                                                         ErrorCodeMapper errorCodeMapper,
+                                                                                         ErrorMessageMapper errorMessageMapper) {
+        return new DataIntegrityViolationExceptionHandler(properties, httpStatusMapper, errorCodeMapper, errorMessageMapper);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
     public ClientResponseExceptionHandler clientResponseExceptionHandler(HttpStatusMapper httpStatusMapper,
                                                                       ErrorCodeMapper errorCodeMapper,
                                                                       ErrorMessageMapper errorMessageMapper) {
@@ -67,15 +74,14 @@ public class ReactiveErrorHandlingConfiguration extends AbstractErrorHandlingCon
     @ConditionalOnMissingBean
     @Order(-2)
     public GlobalErrorWebExceptionHandler globalErrorWebExceptionHandler(ErrorAttributes errorAttributes,
-                                                                                                                                       ServerProperties serverProperties,
-                                                                                                                                       WebProperties webProperties,
-                                                                                                                                       ObjectProvider<ViewResolver> viewResolvers,
-                                                                                                                                       ServerCodecConfigurer serverCodecConfigurer,
-                                                                                                                                       ApplicationContext applicationContext,
-                                                                                                                                       LoggingService loggingService,
-                                                                                                                                       List<ApiExceptionHandler> handlers,
-                                                                                                                                       FallbackApiExceptionHandler fallbackApiExceptionHandler,
-                                                                                                                                       List<ApiErrorResponseCustomizer> responseCustomizers) {
+                                                                         ServerProperties serverProperties,
+                                                                         WebProperties webProperties,ObjectProvider<ViewResolver> viewResolvers,
+                                                                         ServerCodecConfigurer serverCodecConfigurer,
+                                                                         ApplicationContext applicationContext,
+                                                                         LoggingService loggingService,
+                                                                         List<ApiExceptionHandler> handlers,
+                                                                         FallbackApiExceptionHandler fallbackApiExceptionHandler,
+                                                                         List<ApiErrorResponseCustomizer> responseCustomizers) {
 
         GlobalErrorWebExceptionHandler exceptionHandler = new GlobalErrorWebExceptionHandler(errorAttributes,
                                                                                              webProperties.getResources(),

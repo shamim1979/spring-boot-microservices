@@ -1,5 +1,4 @@
-package bd.gov.lims.common.dto;
-
+package bd.gov.lims.common.param;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -14,7 +13,7 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "id")
 @ToString(of = "id")
 @SuperBuilder(toBuilder = true)
-public class BaseDto {
+public class BaseParam {
     private UUID id;
     @Builder.Default
     private Long version = 0L;
@@ -32,3 +31,4 @@ public class BaseDto {
     private UUID deletedByEmployee;
     private String ipAddress;
 }
+

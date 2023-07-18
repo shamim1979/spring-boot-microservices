@@ -1,14 +1,13 @@
 package bd.gov.lims.user.controller;
 
 import bd.gov.lims.common.dto.UserDto;
-import bd.gov.lims.user.entity.User;
+import bd.gov.lims.common.param.UserParam;
 import bd.gov.lims.user.service.UserService;
-import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -21,30 +20,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/hello/{id}", params = "username")
-    public ResponseEntity<String> hello(
-                @PathVariable(name = "id") String id,
-                @Spec(path = "username", spec = LikeIgnoreCase.class) Specification<User> specification
-            ) {
-        System.out.println("the content is correct");
-        return ResponseEntity.ok("hello users");
-    }
-
-    @GetMapping("/hello")
-    public Mono<String> hello() {
-        return Mono.just("hello")
-                .log()
-                .map(d -> {
-            if (d.equals("hello")) {
-                throw new RuntimeException("hello exception");
-            }
-            return d;
-        });
-    }
-
     @PostMapping()
-    public Mono<UserDto> persist(@RequestBody UserDto userDto) {
-        return userService.persistUser(userDto);
+    public Mono<UserDto> persist(@RequestBody UserParam userParam) {
+        return userService.persistUser(userParam);
     }
 
 

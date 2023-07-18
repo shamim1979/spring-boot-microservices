@@ -1,7 +1,9 @@
 package bd.gov.lims.common.errorhandling.handler;
 
 
-import bd.gov.lims.common.errorhandling.*;
+import bd.gov.lims.base.support.*;
+import bd.gov.lims.common.errorhandling.ApiExceptionHandler;
+import bd.gov.lims.common.errorhandling.ErrorHandlingProperties;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
 import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;
 import bd.gov.lims.common.errorhandling.mapper.HttpStatusMapper;
@@ -13,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
+import java.time.Instant;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.Set;
@@ -44,12 +47,19 @@ public class ConstraintViolationApiExceptionHandler extends AbstractApiException
     }
 
     @Override
-    public ApiErrorResponse handle(Throwable exception) {
+    public ApiErrorResponseDto handle(Throwable exception) {
 
         ConstraintViolationException ex = (ConstraintViolationException) exception;
-        ApiErrorResponse response = new ApiErrorResponse(HttpStatus.BAD_REQUEST,
-                                                         getErrorCode(exception),
-                                                         getMessage(ex));
+
+        ApiErrorResponseDto response = ApiErrorResponseDto.builder()
+                .nonce(Instant.now().toEpochMilli())
+                .status(getHttpStatus(exception, HttpStatus.BAD_REQUEST))
+                .message(ex.getMessage())
+                .error(ErrorDto.builder()
+                        .code(getErrorCode(exception))
+                        .message(ex.getMessage())
+                        .build())
+                .build();
         Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
         violations.stream()
                   // sort violations to ensure deterministic order
@@ -84,11 +94,11 @@ public class ConstraintViolationApiExceptionHandler extends AbstractApiException
                   })
                   .forEach(error -> {
                       if (error instanceof ApiFieldError) {
-                          response.addFieldError((ApiFieldError) error);
+                          response.getError().getFieldErrors().add((ApiFieldError) error);
                       } else if (error instanceof ApiGlobalError) {
-                          response.addGlobalError((ApiGlobalError) error);
+                          response.getError().getGlobalErrors().add((ApiGlobalError) error);
                       } else if (error instanceof ApiParameterError) {
-                          response.addParameterError((ApiParameterError) error);
+                          response.getError().getParameterErrors().add((ApiParameterError) error);
                       }
                   });
 

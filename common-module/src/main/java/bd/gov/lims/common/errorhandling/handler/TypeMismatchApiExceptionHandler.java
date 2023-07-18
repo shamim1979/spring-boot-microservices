@@ -1,7 +1,8 @@
 package bd.gov.lims.common.errorhandling.handler;
 
 
-import bd.gov.lims.common.errorhandling.ApiErrorResponse;
+import bd.gov.lims.base.support.ApiErrorResponseDto;
+import bd.gov.lims.base.support.ErrorDto;
 import bd.gov.lims.common.errorhandling.ErrorHandlingProperties;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
 import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;
@@ -9,6 +10,8 @@ import bd.gov.lims.common.errorhandling.mapper.HttpStatusMapper;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import java.time.Instant;
 
 public class TypeMismatchApiExceptionHandler extends AbstractApiExceptionHandler {
     public TypeMismatchApiExceptionHandler(ErrorHandlingProperties properties,
@@ -24,14 +27,22 @@ public class TypeMismatchApiExceptionHandler extends AbstractApiExceptionHandler
     }
 
     @Override
-    public ApiErrorResponse handle(Throwable exception) {
-        ApiErrorResponse response = new ApiErrorResponse(getHttpStatus(exception, HttpStatus.BAD_REQUEST),
-                                                         getErrorCode(exception),
-                                                         getErrorMessage(exception));
+    public ApiErrorResponseDto handle(Throwable exception) {
+
+        ApiErrorResponseDto response = ApiErrorResponseDto.builder()
+                .nonce(Instant.now().toEpochMilli())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message(getErrorMessage(exception))
+                .error(ErrorDto.builder()
+                        .code(getErrorCode(exception))
+                        .message(getErrorMessage(exception))
+                        .build())
+                .build();
+
         TypeMismatchException ex = (TypeMismatchException) exception;
-        response.addErrorProperty("property", getPropertyName(ex));
-        response.addErrorProperty("rejectedValue", ex.getValue());
-        response.addErrorProperty("expectedType", ex.getRequiredType() != null ? ex.getRequiredType().getName() : null);
+        response.getError().getProperties().put("property", getPropertyName(ex));
+        response.getError().getProperties().put("rejectedValue", ex.getValue());
+        response.getError().getProperties().put("expectedType", ex.getRequiredType() != null ? ex.getRequiredType().getName() : null);
         return response;
     }
 

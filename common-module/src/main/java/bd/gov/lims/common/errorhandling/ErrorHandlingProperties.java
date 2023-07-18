@@ -25,7 +25,7 @@ public class ErrorHandlingProperties {
 
     private DefaultErrorCodeStrategy defaultErrorCodeStrategy = DefaultErrorCodeStrategy.ALL_CAPS;
 
-    private boolean httpStatusInJsonResponse = false;
+    private boolean httpStatusInJsonResponse = true;
 
     private Map<String, HttpStatus> httpStatuses = new HashMap<>();
 
@@ -153,12 +153,20 @@ public class ErrorHandlingProperties {
     }
 
     public static class JsonFieldNames {
+        private String error = "error";
         private String code = "code";
         private String message = "message";
         private String fieldErrors = "fieldErrors";
         private String globalErrors = "globalErrors";
         private String parameterErrors = "parameterErrors";
 
+        public String getError() {
+            return error;
+        }
+
+        public void setError(String error) {
+            this.error = error;
+        }
         public String getCode() {
             return code;
         }

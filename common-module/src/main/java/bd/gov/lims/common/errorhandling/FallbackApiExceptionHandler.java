@@ -1,6 +1,8 @@
 package bd.gov.lims.common.errorhandling;
 
 
+import bd.gov.lims.base.support.ApiErrorResponseDto;
+
 public interface FallbackApiExceptionHandler {
-    ApiErrorResponse handle(Throwable exception);
+    ApiErrorResponseDto handle(Throwable exception);
 }

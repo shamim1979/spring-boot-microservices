@@ -1,6 +1,8 @@
 package bd.gov.lims.common.errorhandling;
 
 
+import bd.gov.lims.base.support.ApiErrorResponseDto;
+
 public interface ApiExceptionHandler {
     /**
      * Determine if this {@link ApiExceptionHandler} can handle the given {@link Throwable}.
@@ -14,7 +16,7 @@ public interface ApiExceptionHandler {
     boolean canHandle(Throwable exception);
 
     /**
-     * Handle the given {@link Throwable} and return an {@link ApiErrorResponse} instance
+     * Handle the given {@link Throwable} and return an {@link ApiErrorResponseDto} instance
      * that will be serialized to JSON and returned from the controller method that has
      * thrown the Throwable.
      *
@@ -22,5 +24,5 @@ public interface ApiExceptionHandler {
      * @return the non-null ApiErrorResponse
      */
 
-    ApiErrorResponse handle(Throwable exception);
+    ApiErrorResponseDto handle(Throwable exception);
 }

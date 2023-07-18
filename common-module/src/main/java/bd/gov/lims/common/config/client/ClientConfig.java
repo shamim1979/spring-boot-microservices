@@ -1,6 +1,6 @@
 package bd.gov.lims.common.config.client;
 
-import bd.gov.lims.common.errorhandling.ApiErrorResponse;
+import bd.gov.lims.base.support.ApiErrorResponseDto;
 import bd.gov.lims.common.errorhandling.exception.ClientResponseException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,39 +37,22 @@ public class ClientConfig {
 
     private ExchangeFilterFunction responseFilter() {
         return ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
-            log.info("client response status code -> {}", clientResponse.bodyToMono(ApiErrorResponse.class));
+            log.info("client response status code -> {}", clientResponse.bodyToMono(ApiErrorResponseDto.class));
             if (clientResponse.statusCode().is5xxServerError()) {
-                return clientResponse.bodyToMono(ApiErrorResponse.class)
+                return clientResponse.bodyToMono(ApiErrorResponseDto.class)
                         .flatMap(errorResponse -> {
-                            errorResponse.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-                            fillErrorResponse(errorResponse);
+                            errorResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                             return Mono.error(new ClientResponseException(errorResponse));
                         });
             } else if (clientResponse.statusCode().is4xxClientError()) {
-                return clientResponse.bodyToMono(ApiErrorResponse.class)
+                return clientResponse.bodyToMono(ApiErrorResponseDto.class)
                         .flatMap(errorResponse -> {
-                            errorResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
-                            fillErrorResponse(errorResponse);
+                            errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
                             return Mono.error(new ClientResponseException(errorResponse));
                         });
             } else {
                 return Mono.just(clientResponse);
             }
         });
-    }
-
-    private void fillErrorResponse(ApiErrorResponse errorResponse) {
-        if (errorResponse.getFieldErrors() == null) {
-            errorResponse.setFieldErrors(Collections.emptyList());
-        }
-        if (errorResponse.getGlobalErrors() == null) {
-            errorResponse.setGlobalErrors(Collections.emptyList());
-        }
-        if (errorResponse.getParameterErrors() == null) {
-            errorResponse.setParameterErrors(Collections.emptyList());
-        }
-        if (errorResponse.getProperties() == null) {
-            errorResponse.setProperties(Collections.EMPTY_MAP);
-        }
     }
 }

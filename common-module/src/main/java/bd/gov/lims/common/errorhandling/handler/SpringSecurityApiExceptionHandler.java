@@ -1,13 +1,15 @@
 package bd.gov.lims.common.errorhandling.handler;
 
 
-import bd.gov.lims.common.errorhandling.ApiErrorResponse;
+import bd.gov.lims.base.support.ApiErrorResponseDto;
+import bd.gov.lims.base.support.ErrorDto;
 import bd.gov.lims.common.errorhandling.ErrorHandlingProperties;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
 import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;
 import bd.gov.lims.common.errorhandling.mapper.HttpStatusMapper;
 import org.springframework.http.HttpStatus;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,10 +45,16 @@ public class SpringSecurityApiExceptionHandler extends AbstractApiExceptionHandl
     }
 
     @Override
-    public ApiErrorResponse handle(Throwable exception) {
+    public ApiErrorResponseDto handle(Throwable exception) {
         HttpStatus httpStatus = EXCEPTION_TO_STATUS_MAPPING.getOrDefault(exception.getClass(), INTERNAL_SERVER_ERROR);
-        return new ApiErrorResponse(getHttpStatus(exception, httpStatus),
-                                    getErrorCode(exception),
-                                    getErrorMessage(exception));
+        return ApiErrorResponseDto.builder()
+                .nonce(Instant.now().toEpochMilli())
+                .status(httpStatus.value())
+                .message(exception.getMessage())
+                .error(ErrorDto.builder()
+                        .code(getErrorCode(exception))
+                        .message(exception.getMessage())
+                        .build())
+                .build();
     }
 }
