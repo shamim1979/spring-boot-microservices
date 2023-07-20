@@ -1,9 +1,11 @@
 package bd.gov.lims.user.repository;
 
+import bd.gov.lims.common.repository.BaseRepository;
 import bd.gov.lims.user.entity.AppUser;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 @Repository
-public interface UserRepository extends JpaRepository<AppUser, Long> {
+public interface UserRepository extends BaseRepository<AppUser, UUID> {
 }

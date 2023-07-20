@@ -20,24 +20,29 @@ import java.util.UUID;
 @Setter
 @EqualsAndHashCode(callSuper = true, of = {"username","password","email","phone"})
 @ToString(callSuper = true, of = {"username","password","email","phone"})
-@Entity
-@Table(name = "users")
 @SuperBuilder(toBuilder = true)
-@SQLDelete(sql = "UPDATE users SET is_deleted=1 WHERE id=? and version=?")
-@Where(clause = "is_deleted=0")
+@Entity
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(name = "username_idx", columnNames = {"username"})
+    }, indexes = {
+        @Index(name = "email_idx", columnList = "email"),
+        @Index(name = "phone_idx", columnList = "phone"),
+        @Index(name = "employee_id_idx", columnList = "employeeId"),
+        @Index(name = "office_id_idx", columnList = "officeId")
+    })
+@SQLDelete(sql = "UPDATE users SET deleted=1 WHERE id=? and version=?")
+@Where(clause = "deleted=0")
 public class AppUser extends BaseEntity {
     @Serial
     private static final long serialVersionUID = -5643478615647771471L;
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(nullable = false)
     private String username;
-    @Column(name = "password", nullable = false)
+    @Column(nullable = false)
     private String password;
-    @Column(name = "email")
+    @Column(nullable = false)
     private String email;
-    @Column(name = "phone")
+    @Column(nullable = false)
     private String phone;
-    @Builder.Default
-    private long lastLoginAt = System.currentTimeMillis();
     @Builder.Default
     private boolean accountNonExpired = Boolean.TRUE;
     @Builder.Default
@@ -50,14 +55,12 @@ public class AppUser extends BaseEntity {
     private boolean verified = Boolean.FALSE;
     @Builder.Default
     private boolean deleted = Boolean.FALSE;
-    @Column(name = "employee_id")
     private UUID employeeId;
-    @Column(name = "office_id")
     private UUID officeId;
-    @Column(columnDefinition = "integer default 0")
-    private Integer failedAttempt;
-    @Column(name = "lock_time")
-    private LocalDateTime lockTime;
+    @Builder.Default
+    private Integer failedAttempt = 0;
+    private LocalDateTime lastLoginAt;
+    private LocalDateTime lockAt;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),

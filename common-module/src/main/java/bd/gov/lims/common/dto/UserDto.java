@@ -18,7 +18,6 @@ public class UserDto extends BaseDto{
     private String password;
     private String email;
     private String phone;
-    private long lastLoginAt = System.currentTimeMillis();
     private boolean accountNonExpired = Boolean.TRUE;
     private boolean accountNonLocked = Boolean.TRUE;
     private boolean credentialsNonExpired = Boolean.TRUE;
@@ -28,5 +27,6 @@ public class UserDto extends BaseDto{
     private UUID employeeId;
     private UUID officeId;
     private Integer failedAttempt;
-    private LocalDateTime lockTime;
+    private LocalDateTime lastLoginAt;
+    private LocalDateTime lockAt;
 }

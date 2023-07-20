@@ -1,5 +1,6 @@
 package bd.gov.lims.common.entity;
 
+import bd.gov.lims.base.util.DateTimeUtil;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -29,14 +30,14 @@ public class BaseEntity implements Serializable {
     @Version
     private Long version = 0L;
     @Builder.Default
-    private boolean isDeleted = Boolean.FALSE;
+    private boolean deleted = Boolean.FALSE;
     @Builder.Default
-    private boolean isActive = Boolean.TRUE;
+    private boolean active = Boolean.TRUE;
     @Basic
-    @Column(name="created_at" , nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
     @Basic
-    @Column(name="updated_at", nullable = false)
+    @Column(nullable = false)
     private LocalDateTime updatedAt;
     private UUID createdByUser;
     private UUID updatedByUser;

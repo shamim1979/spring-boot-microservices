@@ -18,9 +18,10 @@ spring:
     username: root
     password: root
   jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    generate-ddl: true
     show-sql: ${database.showSql}
+    properties:
+      hibernate:
+        format_sql: ${database.showSql}
