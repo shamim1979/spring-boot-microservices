@@ -57,20 +57,21 @@ public class UserController implements BaseController<UserParam, AppUser, UserDt
 
     @Override
     @PostMapping()
-    public ResponseEntity<Mono<ApiResponseDto<UserDto>>> save(UserParam param) {
+    public ResponseEntity<Mono<ApiResponseDto<UserDto>>> save(@RequestBody UserParam param) {
         Optional<UserDto> optionalUserDto = userService.save(param);
         return ApiResponseService.generateResponse(optionalUserDto, HttpStatus.CREATED, "User is created successfully");
     }
 
     @Override
     @PutMapping("{id}")
-    public ResponseEntity<Mono<ApiResponseDto<UserDto>>> update(@PathVariable("id") UUID id, UserParam param) {
+    public ResponseEntity<Mono<ApiResponseDto<UserDto>>> update(@PathVariable("id") UUID id, @RequestBody UserParam param) {
         Optional<UserDto> optionalUserDto = userService.update(id, param);
         return ApiResponseService.generateResponse(optionalUserDto, HttpStatus.OK, "User is updated successfully");
     }
 
     @Override
-    public ResponseEntity<Mono<DeleteResponseDto>> deleteById(UUID id) {
+    @DeleteMapping("{id}")
+    public ResponseEntity<Mono<DeleteResponseDto>> deleteById(@PathVariable("id") UUID id) {
         userService.deleteById(id);
         return ApiResponseService.generateResponse(HttpStatus.OK, "User is deleted successfully");
     }
