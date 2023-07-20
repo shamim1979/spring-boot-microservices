@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 @Mapper(config = ConfigMapper.class)
-public interface UserMapper {
+public interface AppUserMapper {
     UserDto entityToDto(AppUser user);
     AppUser paramToEntity(UserParam userParam);
     void paramToEntity(UserParam userParam, @MappingTarget AppUser appUser);

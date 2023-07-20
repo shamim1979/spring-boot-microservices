@@ -3,9 +3,9 @@ package bd.gov.lims.user.service.impl;
 import bd.gov.lims.common.dto.UserDto;
 import bd.gov.lims.common.param.UserParam;
 import bd.gov.lims.user.entity.AppUser;
-import bd.gov.lims.user.mapper.UserMapper;
-import bd.gov.lims.user.repository.UserRepository;
-import bd.gov.lims.user.service.UserService;
+import bd.gov.lims.user.mapper.AppUserMapper;
+import bd.gov.lims.user.repository.AppUserRepository;
+import bd.gov.lims.user.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,11 +19,11 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService<UserParam,AppUser,UserDto> {
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
+public class AppUserServiceImpl implements AppUserService<UserParam,AppUser,UserDto> {
+    private final AppUserRepository userRepository;
+    private final AppUserMapper userMapper;
     @Autowired
-    UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    AppUserServiceImpl(AppUserRepository userRepository, AppUserMapper userMapper) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
     }

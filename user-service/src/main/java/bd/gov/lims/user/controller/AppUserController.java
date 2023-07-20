@@ -8,7 +8,7 @@ import bd.gov.lims.common.param.PageableParam;
 import bd.gov.lims.common.param.UserParam;
 import bd.gov.lims.common.service.ApiResponseService;
 import bd.gov.lims.user.entity.AppUser;
-import bd.gov.lims.user.service.UserService;
+import bd.gov.lims.user.service.AppUserService;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
@@ -27,10 +27,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
-public class UserController implements BaseController<UserParam, AppUser, UserDto> {
-    private final UserService<UserParam, AppUser, UserDto> userService;
+public class AppUserController implements BaseController<UserParam, AppUser, UserDto> {
+    private final AppUserService<UserParam, AppUser, UserDto> userService;
     @Autowired
-    UserController(UserService<UserParam, AppUser, UserDto> userService) {
+    AppUserController(AppUserService<UserParam, AppUser, UserDto> userService) {
         this.userService = userService;
     }
     @Override
