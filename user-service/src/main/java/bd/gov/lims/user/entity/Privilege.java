@@ -1,7 +1,7 @@
 package bd.gov.lims.user.entity;
 
 import bd.gov.lims.common.entity.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -37,7 +37,7 @@ public class Privilege extends BaseEntity {
     @Column(nullable = false)
     private String subModule;
     @ManyToMany(mappedBy = "privileges", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("privileges")
+    @JsonBackReference
     @Builder.Default
     private Set<Role> roles = new LinkedHashSet<>();
 

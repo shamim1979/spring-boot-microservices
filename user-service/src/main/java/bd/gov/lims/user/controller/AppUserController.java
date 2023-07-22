@@ -1,5 +1,6 @@
 package bd.gov.lims.user.controller;
 
+import bd.gov.lims.base.route.ApiProvider;
 import bd.gov.lims.base.support.ApiResponseDto;
 import bd.gov.lims.base.support.DeleteResponseDto;
 import bd.gov.lims.common.controller.BaseController;
@@ -9,6 +10,7 @@ import bd.gov.lims.common.param.UserParam;
 import bd.gov.lims.common.service.ApiResponseService;
 import bd.gov.lims.user.entity.AppUser;
 import bd.gov.lims.user.service.AppUserService;
+import jakarta.validation.Valid;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
@@ -26,7 +28,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(ApiProvider.AppUser.ROOTPATH)
 public class AppUserController implements BaseController<UserParam, AppUser, UserDto> {
     private final AppUserService<UserParam, AppUser, UserDto> userService;
     @Autowired
@@ -34,7 +36,7 @@ public class AppUserController implements BaseController<UserParam, AppUser, Use
         this.userService = userService;
     }
     @Override
-    @GetMapping("{id}")
+    @GetMapping(ApiProvider.IDENTIFIER)
     public ResponseEntity<Mono<ApiResponseDto<UserDto>>> findById(@PathVariable("id") UUID id) {
         Optional<UserDto> optionalUserDto = userService.findById(id);
         return ApiResponseService.generateResponse(optionalUserDto,HttpStatus.OK, "User is found successfully");
@@ -43,34 +45,33 @@ public class AppUserController implements BaseController<UserParam, AppUser, Use
     @Override
     @GetMapping
     public ResponseEntity findAll(@And({
-            @Spec(path = "deleted", params = "deleted", defaultVal = "false", spec = Equal.class),
             @Spec(path = "active", params = "active", defaultVal = "true", spec = Equal.class),
             @Spec(path = "username", params = "username", spec = LikeIgnoreCase.class)
     }) Specification<AppUser> specification, PageableParam pageable) {
         if (pageable.isPageable()) {
             Page<UserDto> userDtoPage = userService.findAll(specification,pageable.getPageable());
-            return ApiResponseService.generateResponse(userDtoPage, HttpStatus.OK, "User list found successfully");
+            return ApiResponseService.generateResponse(userDtoPage, HttpStatus.OK, "User list is found successfully");
         }
         List<UserDto> userDtoList = userService.findAll(specification,pageable.getSort());
-        return ApiResponseService.generateResponse(userDtoList, HttpStatus.OK, "User List found successfully");
+        return ApiResponseService.generateResponse(userDtoList, HttpStatus.OK, "User List is found successfully");
     }
 
     @Override
     @PostMapping()
-    public ResponseEntity<Mono<ApiResponseDto<UserDto>>> save(@RequestBody UserParam param) {
+    public ResponseEntity<Mono<ApiResponseDto<UserDto>>> save(@Valid @RequestBody UserParam param) {
         Optional<UserDto> optionalUserDto = userService.save(param);
         return ApiResponseService.generateResponse(optionalUserDto, HttpStatus.CREATED, "User is created successfully");
     }
 
     @Override
-    @PutMapping("{id}")
-    public ResponseEntity<Mono<ApiResponseDto<UserDto>>> update(@PathVariable("id") UUID id, @RequestBody UserParam param) {
+    @PutMapping(ApiProvider.IDENTIFIER)
+    public ResponseEntity<Mono<ApiResponseDto<UserDto>>> update(@PathVariable("id") UUID id, @Valid @RequestBody UserParam param) {
         Optional<UserDto> optionalUserDto = userService.update(id, param);
         return ApiResponseService.generateResponse(optionalUserDto, HttpStatus.OK, "User is updated successfully");
     }
 
     @Override
-    @DeleteMapping("{id}")
+    @DeleteMapping(ApiProvider.IDENTIFIER)
     public ResponseEntity<Mono<DeleteResponseDto>> deleteById(@PathVariable("id") UUID id) {
         userService.deleteById(id);
         return ApiResponseService.generateResponse(HttpStatus.OK, "User is deleted successfully");

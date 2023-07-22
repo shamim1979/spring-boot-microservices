@@ -43,7 +43,7 @@
             <id>develop</id>
             <properties>
                 <configServer>http://localhost:8081/</configServer>
-                <dbShowSql>false</dbShowSql>
+                <dbShowSql>true</dbShowSql>
                 <activatedProperties>develop</activatedProperties>
             </properties>
             <activation>

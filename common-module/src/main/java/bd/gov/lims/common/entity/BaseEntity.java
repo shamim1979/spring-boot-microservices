@@ -1,6 +1,5 @@
 package bd.gov.lims.common.entity;
 
-import bd.gov.lims.base.util.DateTimeUtil;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

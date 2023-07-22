@@ -19,9 +19,9 @@ public class BaseDto {
     @Builder.Default
     private Long version = 0L;
     @Builder.Default
-    private boolean isDeleted = Boolean.FALSE;
+    private boolean deleted = Boolean.FALSE;
     @Builder.Default
-    private boolean isActive = Boolean.TRUE;
+    private boolean active = Boolean.TRUE;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private UUID createdByUser;
