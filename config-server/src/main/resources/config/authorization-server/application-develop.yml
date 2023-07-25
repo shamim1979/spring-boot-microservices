@@ -1,0 +1,13 @@
+database:
+  showSql: @dbShowSql@
+
+server:
+  port: 8083
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://admin:BdEwu2023@localhost:8082/eureka/
+

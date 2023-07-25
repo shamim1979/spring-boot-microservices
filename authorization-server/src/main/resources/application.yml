@@ -1,0 +1,16 @@
+config:
+  url: @configServer@
+spring:
+  application:
+    name: authorization-server
+  profiles:
+    active: @activatedProperties@
+  cloud:
+    config:
+      fail-fast: true
+      password: BdEwu2023
+      username: admin
+  config:
+    import: configserver:${config.url}
+  main:
+    allow-circular-references: true
