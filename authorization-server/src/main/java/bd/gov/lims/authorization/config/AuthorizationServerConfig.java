@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
@@ -35,7 +36,7 @@ import java.util.UUID;
 
 @Configuration
 public class AuthorizationServerConfig {
-    @Bean
+    /*@Bean
     @Order(1)
     public SecurityFilterChain asSecurityFilterChain(HttpSecurity http) throws Exception {
 
@@ -44,7 +45,7 @@ public class AuthorizationServerConfig {
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class).oidc(Customizer.withDefaults());
         http.exceptionHandling(e -> e
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")));
-
+        http.csrf(Customizer.withDefaults());
         return http.build();
     }
 
@@ -52,9 +53,11 @@ public class AuthorizationServerConfig {
     @Order(2)
     public SecurityFilterChain appSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-                .formLogin()
-                .and()
-                .authorizeHttpRequests().anyRequest().authenticated();
+            .formLogin(Customizer.withDefaults())
+            .authorizeHttpRequests(auth -> {
+                auth.anyRequest().authenticated();
+            });
+        http.csrf(Customizer.withDefaults());
         return http.build();
     }
 
@@ -75,14 +78,16 @@ public class AuthorizationServerConfig {
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
         RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
+                .clientName("lims")
                 .clientId("client")
                 .clientSecret("secret")
+                .scope(OidcScopes.OPENID)
                 .scope("read")
-                .redirectUri("https://oidcdebugger.com/debug")
-                .redirectUri("https://oauthdebugger.com/debug")
-                .redirectUri("https://springone.io/authorized")
+                .redirectUri("http://127.0.0.1:8080/login/oauth2/code/spring")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .build();
 
         return new InMemoryRegisteredClientRepository(registeredClient);
@@ -130,5 +135,5 @@ public class AuthorizationServerConfig {
             throw new IllegalStateException(ex);
         }
         return keyPair;
-    }
+    }*/
 }

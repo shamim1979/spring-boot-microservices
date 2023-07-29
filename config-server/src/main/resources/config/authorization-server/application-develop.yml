@@ -1,6 +1,9 @@
 database:
   showSql: @dbShowSql@
 
+logging.level.org.springframework.security: TRACE
+logging.level.org.springframework.security.oauth2: TRACE
+
 server:
   port: 8083
 
@@ -11,3 +14,35 @@ eureka:
     serviceUrl:
       defaultZone: http://admin:BdEwu2023@localhost:8082/eureka/
 
+logging:
+  level:
+    org:
+      springframework:
+        security:
+          oauth2: TRACE
+
+spring:
+  security:
+    oauth2:
+      authorizationserver:
+        client:
+          client:
+            registration:
+              client-id: "client"
+              client-secret: "{noop}secret"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+              redirect-uris:
+                - "http://127.0.0.1:8080/login/oauth2/code/spring"
+              post-logout-redirect-uris:
+                - "http://127.0.0.1:8080/logged-out"
+              scopes:
+                - "openid"
+                - "profile"
+                - "user.read"
+                - "user.write"
+            require-authorization-consent: false
+            require-proof-key: false
