@@ -20,14 +20,25 @@ spring:
             client-secret: secret
             scope: openid, profile, user.read
             authorization-grant-type: authorization_code
-            redirect-uri: http://127.0.0.1:8080/login/oauth2/code/spring
+            redirect-uri: http://localhost:8080/login/oauth2/code/spring
         provider:
           spring:
             issuer-uri: http://localhost:8083
+
+  session:
+    store-type: redis
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: redis?pass
+      username: default
+
   cloud:
     gateway:
       default-filters:
         - TokenRelay=
+        - SaveSession
       discovery:
         locator:
           enabled: true

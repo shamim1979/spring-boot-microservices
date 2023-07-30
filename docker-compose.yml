@@ -28,9 +28,9 @@ services:
 
   lims-redis:
     container_name: lims-redis
-    image: redis:latest
+    image: redis:7.0
     restart: always
-    command: redis-server --requirepass redispass
+    command: redis-server --requirepass redis?pass
     ports:
       - '6379:6379'
     expose:

@@ -24,7 +24,7 @@ logging:
 spring:
   security:
     oauth2:
-      authorizationserver:
+      authorization-server:
         client:
           client:
             registration:
@@ -36,9 +36,10 @@ spring:
                 - "authorization_code"
                 - "refresh_token"
               redirect-uris:
-                - "http://127.0.0.1:8080/login/oauth2/code/spring"
+                - "http://localhost:8080/login/oauth2/code/spring"
+                - "https://oauthdebugger.com/debug"
               post-logout-redirect-uris:
-                - "http://127.0.0.1:8080/logged-out"
+                - "http://localhost:8080/logged-out"
               scopes:
                 - "openid"
                 - "profile"
