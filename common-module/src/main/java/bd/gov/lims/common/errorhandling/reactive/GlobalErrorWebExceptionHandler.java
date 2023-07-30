@@ -1,10 +1,10 @@
 package bd.gov.lims.common.errorhandling.reactive;
 
-import bd.gov.lims.base.support.ApiErrorResponseDto;
 import bd.gov.lims.common.errorhandling.ApiErrorResponseCustomizer;
 import bd.gov.lims.common.errorhandling.ApiExceptionHandler;
 import bd.gov.lims.common.errorhandling.FallbackApiExceptionHandler;
 import bd.gov.lims.common.errorhandling.LoggingService;
+import bd.gov.lims.common.support.ApiErrorResponseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;

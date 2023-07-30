@@ -1,6 +1,6 @@
 package bd.gov.lims.common.errorhandling.exception;
 
-import bd.gov.lims.base.support.ApiErrorResponseDto;
+import bd.gov.lims.common.support.ApiErrorResponseDto;
 import lombok.Getter;
 
 @Getter

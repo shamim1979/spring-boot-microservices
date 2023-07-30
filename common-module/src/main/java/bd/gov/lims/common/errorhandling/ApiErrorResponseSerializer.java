@@ -1,9 +1,9 @@
 package bd.gov.lims.common.errorhandling;
 
-import bd.gov.lims.base.support.ApiErrorResponseDto;
-import bd.gov.lims.base.support.ApiFieldError;
-import bd.gov.lims.base.support.ApiGlobalError;
-import bd.gov.lims.base.support.ApiParameterError;
+import bd.gov.lims.common.support.ApiErrorResponseDto;
+import bd.gov.lims.common.support.ApiFieldError;
+import bd.gov.lims.common.support.ApiGlobalError;
+import bd.gov.lims.common.support.ApiParameterError;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;

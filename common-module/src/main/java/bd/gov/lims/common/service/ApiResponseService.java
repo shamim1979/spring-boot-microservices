@@ -1,7 +1,7 @@
 package bd.gov.lims.common.service;
 
-import bd.gov.lims.base.support.*;
 import bd.gov.lims.common.dto.BaseDto;
+import bd.gov.lims.common.support.*;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

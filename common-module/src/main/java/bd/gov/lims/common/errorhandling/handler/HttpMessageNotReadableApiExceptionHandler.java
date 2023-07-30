@@ -1,12 +1,12 @@
 package bd.gov.lims.common.errorhandling.handler;
 
-import bd.gov.lims.base.support.ApiErrorResponseDto;
-import bd.gov.lims.base.support.ErrorDto;
 import bd.gov.lims.common.errorhandling.ApiExceptionHandler;
 import bd.gov.lims.common.errorhandling.ErrorHandlingProperties;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
 import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;
 import bd.gov.lims.common.errorhandling.mapper.HttpStatusMapper;
+import bd.gov.lims.common.support.ApiErrorResponseDto;
+import bd.gov.lims.common.support.ErrorDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 

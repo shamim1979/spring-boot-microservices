@@ -27,7 +27,6 @@
         <module>registry-server</module>
         <module>gateway-server</module>
         <module>common-module</module>
-        <module>base-module</module>
         <module>authorization-server</module>
     </modules>
 

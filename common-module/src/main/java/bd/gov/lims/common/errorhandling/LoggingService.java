@@ -1,6 +1,6 @@
 package bd.gov.lims.common.errorhandling;
 
-import bd.gov.lims.base.support.ApiErrorResponseDto;
+import bd.gov.lims.common.support.ApiErrorResponseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.logging.LogLevel;

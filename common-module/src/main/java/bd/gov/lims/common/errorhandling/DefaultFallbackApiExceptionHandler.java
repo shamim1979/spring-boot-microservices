@@ -1,10 +1,10 @@
 package bd.gov.lims.common.errorhandling;
 
-import bd.gov.lims.base.support.ApiErrorResponseDto;
-import bd.gov.lims.base.support.ErrorDto;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
 import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;
 import bd.gov.lims.common.errorhandling.mapper.HttpStatusMapper;
+import bd.gov.lims.common.support.ApiErrorResponseDto;
+import bd.gov.lims.common.support.ErrorDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;

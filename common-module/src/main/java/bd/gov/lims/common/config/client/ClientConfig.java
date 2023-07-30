@@ -1,7 +1,7 @@
 package bd.gov.lims.common.config.client;
 
-import bd.gov.lims.base.support.ApiErrorResponseDto;
 import bd.gov.lims.common.errorhandling.exception.ClientResponseException;
+import bd.gov.lims.common.support.ApiErrorResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;

@@ -1,14 +1,14 @@
 package bd.gov.lims.common.errorhandling.handler;
 
 
-import bd.gov.lims.base.support.ApiErrorResponseDto;
-import bd.gov.lims.base.support.ApiFieldError;
-import bd.gov.lims.base.support.ApiGlobalError;
-import bd.gov.lims.base.support.ErrorDto;
 import bd.gov.lims.common.errorhandling.ErrorHandlingProperties;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
 import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;
 import bd.gov.lims.common.errorhandling.mapper.HttpStatusMapper;
+import bd.gov.lims.common.support.ApiErrorResponseDto;
+import bd.gov.lims.common.support.ApiFieldError;
+import bd.gov.lims.common.support.ApiGlobalError;
+import bd.gov.lims.common.support.ErrorDto;
 import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;

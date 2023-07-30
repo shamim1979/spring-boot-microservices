@@ -1,11 +1,11 @@
 package bd.gov.lims.common.errorhandling.handler;
 
-import bd.gov.lims.base.support.ApiErrorResponseDto;
-import bd.gov.lims.base.support.ErrorDto;
 import bd.gov.lims.common.errorhandling.ErrorHandlingProperties;
 import bd.gov.lims.common.errorhandling.mapper.ErrorCodeMapper;
 import bd.gov.lims.common.errorhandling.mapper.ErrorMessageMapper;
 import bd.gov.lims.common.errorhandling.mapper.HttpStatusMapper;
+import bd.gov.lims.common.support.ApiErrorResponseDto;
+import bd.gov.lims.common.support.ErrorDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
