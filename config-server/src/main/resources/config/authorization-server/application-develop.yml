@@ -38,6 +38,7 @@ spring:
               redirect-uris:
                 - "http://localhost:8080/login/oauth2/code/spring"
                 - "https://oauthdebugger.com/debug"
+                - "https://getpostman.com/oauth2/callback"
               post-logout-redirect-uris:
                 - "http://localhost:8080/logged-out"
               scopes:
