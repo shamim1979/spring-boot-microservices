@@ -22,6 +22,20 @@ logging:
           oauth2: TRACE
 
 spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/lims
+    username: root
+    password: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: ${database.showSql}
+    properties:
+      hibernate:
+        format_sql: ${database.showSql}
+
   security:
     oauth2:
       authorization-server:
