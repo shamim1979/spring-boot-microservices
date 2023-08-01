@@ -21,7 +21,6 @@
     <description>Demo project for Spring Boot</description>
 
     <modules>
-        <module>user-service</module>
         <module>utility-service</module>
         <module>config-server</module>
         <module>registry-server</module>
