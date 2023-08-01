@@ -1,3 +1,9 @@
+redirect-uris:
+  first-uri: "http://localhost:8080/login/oauth2/code/spring"
+  second-uri: "https://oauthdebugger.com/debug"
+  third-uri: "https://getpostman.com/oauth2/callback"
+logout-uri: "http://localhost:8080/logged-out"
+
 database:
   showSql: @dbShowSql@
 
@@ -35,4 +41,36 @@ spring:
     properties:
       hibernate:
         format_sql: ${database.showSql}
+
+  security:
+    oauth2:
+      authorization-server:
+        client:
+          client:
+            registration:
+              client-id: "client"
+              client-secret: "$2a$10$skWm9KytWmN.PDOV0m8Dz.xx9QAeeffD0jPdpurp6b8BLLdkTG9Ce"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+              redirect-uris:
+                - "http://localhost:8080/login/oauth2/code/spring"
+                - "https://oauthdebugger.com/debug"
+                - "https://getpostman.com/oauth2/callback"
+              post-logout-redirect-uris:
+                - "http://localhost:8080/logged-out"
+              scopes:
+                - "openid"
+                - "profile"
+                - "user.read"
+                - "user.write"
+            require-authorization-consent: false
+            require-proof-key: false
+
+      resource-server:
+        jwt:
+          issuer-uri: http://localhost:8083
+
 
