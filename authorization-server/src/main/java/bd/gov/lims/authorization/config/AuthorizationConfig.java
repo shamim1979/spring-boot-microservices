@@ -5,27 +5,46 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
+import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationCodeAuthenticationProvider;
+import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
+import org.springframework.security.oauth2.server.authorization.web.OAuth2ClientAuthenticationFilter;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 public class AuthorizationConfig {
+    private final PasswordEncoder passwordEncoder;
+    AuthorizationConfig(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
     @Bean
     @Order(1)
     SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -69,8 +88,8 @@ public class AuthorizationConfig {
 
     @Bean
     InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-        var user1 = User.withUsername("user").password("{noop}password").roles("USER").build();
-        var user2 = User.withUsername("admin").password("{noop}password").roles("USER", "ADMIN").build();
+        var user1 = User.withUsername("user").password(passwordEncoder.encode("user")).roles("USER").build();
+        var user2 = User.withUsername("admin").password(passwordEncoder.encode("admin")).roles("USER", "ADMIN").build();
         return new InMemoryUserDetailsManager(user1, user2);
     }
 
@@ -85,6 +104,33 @@ public class AuthorizationConfig {
             }
         };
     }
+    @Bean
+    public RegisteredClientRepository registeredClientRepository() {
+        RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
+                .clientName("client")
+                .clientId("client")
+                .clientSecret(passwordEncoder.encode("secret"))
+                .scope(OidcScopes.OPENID)
+                .scope("profile")
+                .scope("user.read")
+                .scope("user.write")
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+                .redirectUri("http://localhost:8080/login/oauth2/code/spring")
+                .redirectUri("https://oauthdebugger.com/debug")
+                .redirectUri("https://getpostman.com/oauth2/callback")
+                .postLogoutRedirectUri("http://localhost:8080/logged-out")
+                .clientSettings(ClientSettings.builder()
+                        .requireAuthorizationConsent(false)
+                        .requireProofKey(false)
+                        .build())
+                .build();
+
+        return new InMemoryRegisteredClientRepository(registeredClient);
+    }
+
     /*@Bean
     @Order(1)
     public SecurityFilterChain asSecurityFilterChain(HttpSecurity http) throws Exception {

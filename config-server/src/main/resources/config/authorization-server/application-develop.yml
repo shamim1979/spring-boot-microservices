@@ -36,29 +36,3 @@ spring:
       hibernate:
         format_sql: ${database.showSql}
 
-  security:
-    oauth2:
-      authorization-server:
-        client:
-          client:
-            registration:
-              client-id: "client"
-              client-secret: "{noop}secret"
-              client-authentication-methods:
-                - "client_secret_basic"
-              authorization-grant-types:
-                - "authorization_code"
-                - "refresh_token"
-              redirect-uris:
-                - "http://localhost:8080/login/oauth2/code/spring"
-                - "https://oauthdebugger.com/debug"
-                - "https://getpostman.com/oauth2/callback"
-              post-logout-redirect-uris:
-                - "http://localhost:8080/logged-out"
-              scopes:
-                - "openid"
-                - "profile"
-                - "user.read"
-                - "user.write"
-            require-authorization-consent: false
-            require-proof-key: false
