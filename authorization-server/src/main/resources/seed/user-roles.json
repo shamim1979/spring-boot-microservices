@@ -1,0 +1,5 @@
+[
+    {"username":"superadmin", "roles": "SUPER_ADMIN_ROLE,USER_ROLE"},
+    {"username":"admin", "roles": "ADMIN_ROLE,USER_ROLE"},
+    {"username":"user", "roles": "USER_ROLE"}
+]

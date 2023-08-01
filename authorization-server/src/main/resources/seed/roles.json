@@ -1,0 +1,7 @@
+[
+    {"NAME":"SUPER_ADMIN_ROLE", "DISPLAY": "Super Admin Role", "PRIORITY": "1"},
+    {"NAME":"ADMIN_ROLE", "DISPLAY": "Admin Role", "PRIORITY": "2"},
+    {"NAME":"OFFICE_ADMIN_ROLE", "DISPLAY": "Office Admin Role", "PRIORITY": "3"},
+    {"NAME":"EMPLOYEE_ROLE", "DISPLAY": "Employee Role", "PRIORITY": "4"},
+    {"NAME":"USER_ROLE", "DISPLAY": "User Role", "PRIORITY": "9"}
+]

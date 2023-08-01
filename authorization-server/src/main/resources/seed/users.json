@@ -1,0 +1,20 @@
+[
+  {
+    "username": "superadmin",
+    "password": "superadmin",
+    "email": "superadmin@gmail.com",
+    "phone": "01927206201"
+  },
+  {
+    "username": "admin",
+    "password": "admin",
+    "email": "admin@gmail.com",
+    "phone": "01927206202"
+  },
+  {
+    "username": "user",
+    "password": "user",
+    "email": "user@gmail.com",
+    "phone": "01927206203"
+  }
+]
