@@ -1,4 +1,4 @@
-package bd.gov.lims.gateway.config;
+package bd.gov.lims.utility.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
-public class GatewayServerConfig {
+public class ResourceServerConfig {
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
     String issuerUri;
     @Bean
@@ -20,7 +20,6 @@ public class GatewayServerConfig {
                 .authorizeExchange(auth -> auth.anyExchange().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(withDefaults()))
-                .csrf(csrf -> csrf.disable())
                 .build();
     }
     @Bean

@@ -68,7 +68,7 @@ public class AuthorizationConfig {
                 )
                 .oauth2ResourceServer((resourceServer) -> resourceServer
                         .jwt(Customizer.withDefaults()));
-
+        http.csrf(csrf -> csrf.disable());
         return http.build();
     }
 
@@ -84,6 +84,7 @@ public class AuthorizationConfig {
                         .loginPage("/login")
                         .permitAll()
                 );
+        http.csrf(csrf -> csrf.disable());
         return http.build();
     }
 

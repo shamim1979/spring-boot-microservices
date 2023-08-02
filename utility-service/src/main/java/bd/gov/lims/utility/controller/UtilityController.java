@@ -4,6 +4,7 @@ import bd.gov.lims.common.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +22,9 @@ public class UtilityController {
         this.userClient = userClient;
     }
     @GetMapping("/hello")
+    @PreAuthorize("hasRole('USER_ROLE')")
     public Mono<String> hello() {
-        Mono<String> stringMono = userClient.build().get().uri("/api/users/hello").retrieve().bodyToMono(String.class);
-        return stringMono;
+        return Mono.just("hello");
     }
 
     @PostMapping("/user")
